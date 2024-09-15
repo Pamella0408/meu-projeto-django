@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from .models import Task
 from .forms import TaskForm, UserRegistrationForm
+from django.views.generic.detail import DetailView
 
 def home(request):
     return render(request, 'home.html')
@@ -71,3 +72,8 @@ def register(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
+
+class TaskDetailView(detailView):
+    model = Task
+    template_name = 'task_detail.html'
+    
