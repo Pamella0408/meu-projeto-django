@@ -6,6 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Task
 from .forms import TaskForm, UserRegistrationForm
 from django.views.generic.detail import DetailView
+from django.db.models import Q
+from django.views.generic.list import ListView
+
 
 def home(request):
     return render(request, 'home.html')
@@ -76,4 +79,14 @@ def register(request):
 class TaskDetailView(detailView):
     model = Task
     template_name = 'task_detail.html'
+
+class TaskListView(ListView):
+    model = task 
+    template_name = 'task_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q)
+            if query:
+                return Task.objects.filter(Q(title_icontains=query) | Q(description_icontains=query))
+            return Task.objects.all()
     
