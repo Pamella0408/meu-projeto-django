@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import TaskDetailView
+from .views import ProfileUpdataView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,4 +13,5 @@ urlpatterns = [
     path('task/<int:pk>/edit/', views.task_update, name='task-update'),
     path('task/<int:pk>/delete/', views.task_delete, name='task-delete'),
     path('task/<int:pk>/', TaskDetailView.as_view(), name='task-datil'),
+    path('profile/edit/', ProfileUpdateView.as_view(), name='profile-edit'),
 ]
