@@ -3,11 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User 
 from .models import Task
 from .forms import TaskForm, UserRegistrationForm
 from django.views.generic.detail import DetailView
 from django.db.models import Q
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 
 
 def home(request):
@@ -89,4 +91,12 @@ class TaskListView(ListView):
             if query:
                 return Task.objects.filter(Q(title_icontains=query) | Q(description_icontains=query))
             return Task.objects.all()
+
+class ProfileUpdateView(UpdateView):
+    model = User
+    template_name = 'profile_edit.html'
+    fields = ['username', 'email']
+
+    def get_object(self):
+        return self.request.user
     
